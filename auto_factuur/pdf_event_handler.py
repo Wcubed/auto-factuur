@@ -13,19 +13,21 @@ class PdfEventHandler(FileSystemEventHandler):
             return None
 
         elif event.event_type == 'created':
-            potential_pdf_path = event.src_path
+            pdf_path = event.src_path
         elif event.event_type == 'moved':
-            potential_pdf_path = event.dest_path
+            pdf_path = event.dest_path
         else:
             return None
 
-        logging.info("file " + event.event_type + ": " + potential_pdf_path)
+        logging.info("file " + event.event_type + ": " + pdf_path)
 
-        if is_file_pdf(potential_pdf_path):
+        if is_file_pdf(pdf_path):
             # The filename looks like this might be a pdf.
-            logging.info("file is a pdf")
+            logging.info("File is a pdf")
 
-            mail.construct_mail()
+            new_mail = mail.Mail(title=os.path.basename(pdf_path), body="Factuur")
+
+            mail.open_mail_program(new_mail)
 
 
 

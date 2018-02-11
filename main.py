@@ -22,6 +22,8 @@ def main():
     observer.schedule(event_handler, TEST_DIRECTORY, recursive=False)
     observer.start()
 
+    logging.info("Observing '{}'".format(TEST_DIRECTORY))
+
     logging.info("Setup complete.")
 
     try:
