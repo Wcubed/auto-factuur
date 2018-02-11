@@ -19,16 +19,13 @@ class PdfEventHandler(FileSystemEventHandler):
         else:
             return None
 
-        logging.info("file " + event.event_type + ": " + pdf_path)
-
         if is_file_pdf(pdf_path):
             # The filename looks like this might be a pdf.
-            logging.info("File is a pdf")
+            logging.info("New pdf detected: {}".format(pdf_path))
 
             new_mail = mail.Mail(title=os.path.basename(pdf_path), body="Factuur")
 
             mail.open_mail_program(new_mail)
-
 
 
 def is_file_pdf(src_path):
