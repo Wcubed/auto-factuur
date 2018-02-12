@@ -7,13 +7,15 @@ from watchdog.observers import Observer
 from auto_factuur.pdf_event_handler import PdfEventHandler
 
 TEST_DIRECTORY = "../test_dir/"
+LOG_FILE = "../log.txt"
 
 
 def main():
     if not os.path.exists(TEST_DIRECTORY):
         os.makedirs(TEST_DIRECTORY)
 
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(filename=LOG_FILE,
+                        level=logging.INFO,
                         format='[%(asctime)s]: %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
 

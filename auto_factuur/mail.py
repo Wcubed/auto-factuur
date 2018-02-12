@@ -34,7 +34,7 @@ def open_mail_program(new_mail=Mail()):
 
     platform = sys.platform
 
-    logging.info("Opening mail program.")
+    logging.debug("Opening mail program.")
 
     # TODO: Test this vvv.
     # TODO: Make this return nice errors when stuff fails vvv.

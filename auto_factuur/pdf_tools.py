@@ -4,7 +4,7 @@ from PyPDF2 import PdfFileReader, PdfFileMerger
 
 
 def attach_appendix(input_path, appendix_path, output_path):
-    logging.info("Attaching appendix to: {}, outputting to: {}".format(input_path, output_path))
+    logging.debug("Attaching appendix to: {}, outputting to: {}".format(input_path, output_path))
 
     concat_pdf_files(input_path, appendix_path, output_path)
 
