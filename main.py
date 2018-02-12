@@ -19,7 +19,7 @@ def main():
 
     event_handler = PdfEventHandler()
     observer = Observer()
-    observer.schedule(event_handler, TEST_DIRECTORY, recursive=False)
+    observer.schedule(event_handler, TEST_DIRECTORY, recursive=True)
     observer.start()
 
     logging.info("Observing '{}'".format(TEST_DIRECTORY))
