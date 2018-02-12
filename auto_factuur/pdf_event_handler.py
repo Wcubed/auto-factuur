@@ -35,7 +35,11 @@ class PdfEventHandler(FileSystemEventHandler):
 
         logging.info("New pdf detected: {}".format(pdf_path))
 
-        pdf_tools.attach_appendix(pdf_path, APPENDIX_PATH)
+        temp_pdf = pdf_tools.attach_appendix(pdf_path, APPENDIX_PATH)
+        # Overwrite the input file with the output file,
+        # it is no longer needed.
+        # TODO This function might not work propperly on OSX. Test that.
+        os.replace(temp_pdf, pdf_path)
 
         new_mail = mail.Mail(to="wybe@ruurdwestra.nl",
                              subject=os.path.basename(pdf_path),
