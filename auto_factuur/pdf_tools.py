@@ -3,15 +3,10 @@ import logging
 from PyPDF2 import PdfFileReader, PdfFileMerger
 
 
-def attach_appendix(input_path, appendix_path):
-    output_pdf = os.path.dirname(input_path)
-    output_pdf = os.path.join(output_pdf, "Output.pdf")
+def attach_appendix(input_path, appendix_path, output_path):
+    logging.info("Attaching appendix to: {}, outputting to: {}".format(input_path, output_path))
 
-    logging.info("Attaching voorwaarden to: {}, outputting to: {}".format(input_path, output_pdf))
-
-    concat_pdf_files(input_path, appendix_path, output_pdf)
-
-    return output_pdf
+    concat_pdf_files(input_path, appendix_path, output_path)
 
 
 def concat_pdf_files(first, second, output):
