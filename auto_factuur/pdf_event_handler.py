@@ -3,6 +3,7 @@ import os
 
 from watchdog.events import FileSystemEventHandler
 import auto_factuur.mail as mail
+import auto_factuur.pdf_tools as pdf_tools
 
 
 class PdfEventHandler(FileSystemEventHandler):
@@ -22,6 +23,8 @@ class PdfEventHandler(FileSystemEventHandler):
         if is_file_pdf(pdf_path):
             # The filename looks like this might be a pdf.
             logging.info("New pdf detected: {}".format(pdf_path))
+
+            pdf_tools.attach_voorwaarden(pdf_path)
 
             new_mail = mail.Mail(title=os.path.basename(pdf_path), body="Factuur")
 
