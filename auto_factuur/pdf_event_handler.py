@@ -6,7 +6,7 @@ import auto_factuur.mail as mail
 import auto_factuur.pdf_tools as pdf_tools
 
 # TODO Make a proper config file/argument for this.
-APPENDIX_PATH = "../resources/test_voorwaarden.pdf"
+APPENDIX_PATH = "../resources/Metaalunievoorwaarden_2014.pdf"
 
 
 class PdfEventHandler(FileSystemEventHandler):
