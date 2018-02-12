@@ -42,7 +42,7 @@ def pdf_has_appendix(pdf_path, appendix_path):
     page_content = last_page.extractText()
     appendix_content = appendix_page.extractText()
 
-    # logging.info(page_content)
-    # logging.info(appendix_content)
+    logging.debug(page_content)
+    logging.debug(appendix_content)
 
     return page_content == appendix_content
