@@ -5,6 +5,9 @@ from watchdog.events import FileSystemEventHandler
 import auto_factuur.mail as mail
 import auto_factuur.pdf_tools as pdf_tools
 
+# TODO Make a proper config file/argument for this.
+APPENDIX_PATH = "../resources/test_voorwaarden.pdf"
+
 
 class PdfEventHandler(FileSystemEventHandler):
 
@@ -20,16 +23,22 @@ class PdfEventHandler(FileSystemEventHandler):
         else:
             return None
 
-        if is_file_pdf(pdf_path):
-            # The filename looks like this might be a pdf.
-            logging.info("New pdf detected: {}".format(pdf_path))
+        if not pdf_tools.is_file_pdf(pdf_path):
+            return None
 
-            pdf_tools.attach_voorwaarden(pdf_path)
+        # The filename says it is a pdf.
 
-            new_mail = mail.Mail(title=os.path.basename(pdf_path), body="Factuur")
+        if pdf_tools.pdf_has_appendix(pdf_path, APPENDIX_PATH):
+            return None
 
-            mail.open_mail_program(new_mail)
+        # It doesn't already have the attachment.
+
+        logging.info("New pdf detected: {}".format(pdf_path))
+
+        pdf_tools.attach_appendix(pdf_path, APPENDIX_PATH)
+
+        new_mail = mail.Mail(title=os.path.basename(pdf_path), body="Factuur")
+
+        mail.open_mail_program(new_mail)
 
 
-def is_file_pdf(src_path):
-    return os.path.splitext(src_path)[-1] == '.pdf'
