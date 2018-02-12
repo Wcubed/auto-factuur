@@ -10,14 +10,17 @@ class Mail:
         self._to = to
         self._subject = subject
         self._body = body
-        self._attachment=attachment
+        self._attachment = attachment
 
     def get_url(self):
-        url = "mailto:{}?subject={}&body={}&attachment={}"
-        return url.format(self._to,
-                          self.subject(),
-                          self.body(),
-                          self._attachment)
+        url = "mailto:{}?subject={}&body={}"
+        url = url.format(self._to,
+                         self.subject(),
+                         self.body())
+        if self._attachment:
+            url = url + "&attachment={}".format(self._attachment)
+
+        return url
 
     def subject(self):
         return self._subject
