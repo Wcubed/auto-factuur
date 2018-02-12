@@ -37,7 +37,10 @@ class PdfEventHandler(FileSystemEventHandler):
 
         pdf_tools.attach_appendix(pdf_path, APPENDIX_PATH)
 
-        new_mail = mail.Mail(title=os.path.basename(pdf_path), body="Factuur")
+        new_mail = mail.Mail(to="wybe@ruurdwestra.nl",
+                             subject=os.path.basename(pdf_path),
+                             body="Factuur",
+                             attachment=pdf_path)
 
         mail.open_mail_program(new_mail)
 

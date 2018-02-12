@@ -6,16 +6,21 @@ import subprocess
 
 class Mail:
 
-    def __init__(self, title="", body=""):
-        self._title = title
+    def __init__(self, to="", subject="", body="", attachment=None):
+        self._to = to
+        self._subject = subject
         self._body = body
+        self._attachment=attachment
 
     def get_url(self):
-        url = "mailto:?subject={}&body={}"
-        return url.format(self.title(), self.body())
+        url = "mailto:{}?subject={}&body={}&attachment={}"
+        return url.format(self._to,
+                          self.subject(),
+                          self.body(),
+                          self._attachment)
 
-    def title(self):
-        return self._title
+    def subject(self):
+        return self._subject
 
     def body(self):
         return self._body
