@@ -5,6 +5,7 @@ import time
 from watchdog.observers import Observer
 
 from auto_factuur.pdf_event_handler import PdfEventHandler
+from auto_factuur.contacts_reader import ContactsReader
 from auto_factuur.config import Config
 
 CONFIG_PATH = "../config.json"
@@ -19,6 +20,8 @@ def main():
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     config.load_config(CONFIG_PATH)
+
+    contacts = ContactsReader(config.contacts_path(), config.contacts_sheet_name())
 
     if not os.path.exists(config.watch_path()):
         os.makedirs(config.watch_path())

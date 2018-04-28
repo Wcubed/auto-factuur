@@ -10,6 +10,8 @@ class Config:
         "appendix_path": "../resources/Metaalunievoorwaarden_2014.pdf",
         "log_path": "../log.txt",
         "watch_path": "../test_dir/",
+        "contacts_path": "../resources/contacts.xlsx",
+        "contacts_sheet_name": "adressenlijst",
         "mail_body": "Factuur\nFactuur!",
     }
 
@@ -65,6 +67,12 @@ class Config:
 
     def appendix_path(self):
         return self._get_key_or_return_default("appendix_path")
+
+    def contacts_path(self):
+        return self._get_key_or_return_default("contacts_path")
+
+    def contacts_sheet_name(self):
+        return self._get_key_or_return_default("contacts_sheet_name")
 
     def mail_body(self):
         return self._get_key_or_return_default("mail_body")
