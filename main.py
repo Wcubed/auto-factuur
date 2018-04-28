@@ -23,7 +23,7 @@ def main():
     if not os.path.exists(config.watch_path()):
         os.makedirs(config.watch_path())
 
-    event_handler = PdfEventHandler(config.appendix_path())
+    event_handler = PdfEventHandler(config.appendix_path(), config.mail_body())
     observer = Observer()
     observer.schedule(event_handler, config.watch_path(), recursive=True)
     observer.start()

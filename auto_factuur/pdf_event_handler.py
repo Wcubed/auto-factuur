@@ -8,7 +8,7 @@ import auto_factuur.pdf_tools as pdf_tools
 
 class PdfEventHandler(FileSystemEventHandler):
 
-    def __init__(self, appendix_path):
+    def __init__(self, appendix_path, mail_body):
         super().__init__()
 
         # The event handler ignores changes
@@ -19,6 +19,7 @@ class PdfEventHandler(FileSystemEventHandler):
         self._last_renamed_pdf = ""
 
         self.appendix_path = appendix_path
+        self.mail_body = mail_body
 
     def on_any_event(self, event, **kwargs):
         try:
@@ -65,7 +66,7 @@ class PdfEventHandler(FileSystemEventHandler):
 
             new_mail = mail.Mail(to="wybe@ruurdwestra.nl",
                                  subject=os.path.basename(pdf_path),
-                                 body="Factuur",
+                                 body=self.mail_body,
                                  attachment=pdf_path)
 
             mail.open_mail_program(new_mail)

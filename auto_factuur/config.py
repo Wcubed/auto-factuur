@@ -10,6 +10,7 @@ class Config:
         "appendix_path": "../resources/Metaalunievoorwaarden_2014.pdf",
         "log_path": "../log.txt",
         "watch_path": "../test_dir/",
+        "mail_body": "Factuur\nFactuur!",
     }
 
     def __init__(self):
@@ -64,3 +65,6 @@ class Config:
 
     def appendix_path(self):
         return self._get_key_or_return_default("appendix_path")
+
+    def mail_body(self):
+        return self._get_key_or_return_default("mail_body")
