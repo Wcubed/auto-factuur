@@ -5,13 +5,10 @@ from watchdog.events import FileSystemEventHandler
 import auto_factuur.mail as mail
 import auto_factuur.pdf_tools as pdf_tools
 
-# TODO Make a proper config file/argument for this.
-APPENDIX_PATH = "../resources/Metaalunievoorwaarden_2014.pdf"
-
 
 class PdfEventHandler(FileSystemEventHandler):
 
-    def __init__(self):
+    def __init__(self, appendix_path):
         super().__init__()
 
         # The event handler ignores changes
@@ -20,6 +17,8 @@ class PdfEventHandler(FileSystemEventHandler):
         # This to prevent change loops.
         self._last_output_pdf = ""
         self._last_renamed_pdf = ""
+
+        self.appendix_path = appendix_path
 
     def on_any_event(self, event, **kwargs):
         try:
@@ -46,7 +45,7 @@ class PdfEventHandler(FileSystemEventHandler):
                 return None
             # The filename says it is a pdf.
 
-            if pdf_tools.pdf_has_appendix(pdf_path, APPENDIX_PATH):
+            if pdf_tools.pdf_has_appendix(pdf_path,  self.appendix_path):
                 return None
             # It doesn't already have the attachment.
 
@@ -58,10 +57,10 @@ class PdfEventHandler(FileSystemEventHandler):
             self._last_output_pdf = temp_pdf
             self._last_renamed_pdf = pdf_path
 
-            pdf_tools.attach_appendix(pdf_path, APPENDIX_PATH, temp_pdf)
+            pdf_tools.attach_appendix(pdf_path,  self.appendix_path, temp_pdf)
             # Overwrite the input file with the output file,
             # it is no longer needed.
-            # TODO This function might not work propperly on OSX. Test that.
+            # TODO This function might not work properly on OSX. Test that.
             os.replace(temp_pdf, pdf_path)
 
             new_mail = mail.Mail(to="wybe@ruurdwestra.nl",
