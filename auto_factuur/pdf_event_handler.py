@@ -67,7 +67,7 @@ class PdfEventHandler(FileSystemEventHandler):
 
             self.get_invoice_number(os.path.basename(pdf_path))
 
-            new_mail = mail.Mail(to="wybe@ruurdwestra.nl",
+            new_mail = mail.Mail(to="",
                                  cc=self.mail_cc,
                                  subject=os.path.basename(pdf_path),
                                  body=self.mail_body,
