@@ -9,7 +9,7 @@ import auto_factuur.pdf_tools as pdf_tools
 
 class PdfEventHandler(FileSystemEventHandler):
 
-    def __init__(self, appendix_path, mail_body):
+    def __init__(self, config):
         super().__init__()
 
         # The event handler ignores changes
@@ -19,8 +19,8 @@ class PdfEventHandler(FileSystemEventHandler):
         self._last_output_pdf = ""
         self._last_renamed_pdf = ""
 
-        self.appendix_path = appendix_path
-        self.mail_body = mail_body
+        self.appendix_path = config.appendix_path()
+        self.mail_body = config.mail_body()
 
     def on_any_event(self, event, **kwargs):
         try:
@@ -75,9 +75,8 @@ class PdfEventHandler(FileSystemEventHandler):
         except Exception as exception:
             logging.exception(exception)
 
-
-
-    def get_invoice_number(self, filename):
+    @staticmethod
+    def get_invoice_number(filename):
         """
         Gets the invoice number from the filename.
         Returns None if no number is found.
