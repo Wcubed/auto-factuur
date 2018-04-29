@@ -12,6 +12,7 @@ class Config:
         "watch_path": "../test_dir/",
         "contacts_path": "../resources/contacts.xlsx",
         "contacts_sheet_name": "adressenlijst",
+        "mail_cc": "",
         "mail_body": "Factuur\nFactuur!",
     }
 
@@ -73,6 +74,9 @@ class Config:
 
     def contacts_sheet_name(self):
         return self._get_key_or_return_default("contacts_sheet_name")
+
+    def mail_cc(self):
+        return self._get_key_or_return_default("mail_cc")
 
     def mail_body(self):
         return self._get_key_or_return_default("mail_body")

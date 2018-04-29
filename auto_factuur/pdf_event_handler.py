@@ -20,6 +20,7 @@ class PdfEventHandler(FileSystemEventHandler):
         self._last_renamed_pdf = ""
 
         self.appendix_path = config.appendix_path()
+        self.mail_cc = config.mail_cc()
         self.mail_body = config.mail_body()
 
     def on_any_event(self, event, **kwargs):
@@ -67,9 +68,12 @@ class PdfEventHandler(FileSystemEventHandler):
             self.get_invoice_number(os.path.basename(pdf_path))
 
             new_mail = mail.Mail(to="wybe@ruurdwestra.nl",
+                                 cc=self.mail_cc,
                                  subject=os.path.basename(pdf_path),
                                  body=self.mail_body,
                                  attachment=pdf_path)
+
+            logging.info(new_mail.get_url())
 
             mail.open_mail_program(new_mail)
         except Exception as exception:
