@@ -21,8 +21,6 @@ def main():
 
     config.load_config(CONFIG_PATH)
 
-    contacts = ContactsReader(config.contacts_path(), config.contacts_sheet_name())
-
     if not os.path.exists(config.watch_path()):
         os.makedirs(config.watch_path())
 
