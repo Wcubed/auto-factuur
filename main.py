@@ -44,8 +44,6 @@ def main():
 
     observer.join()
 
-    config.save_config(CONFIG_PATH)
-
 
 if __name__ == "__main__":
     main()
