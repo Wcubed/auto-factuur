@@ -4,3 +4,4 @@ test_dir
 log.txt
 config.json
 virtualenv
+__pycache__

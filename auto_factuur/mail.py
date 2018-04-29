@@ -13,6 +13,7 @@ class Mail:
         self._attachment = attachment
 
     def get_url(self):
+        # TODO: Do we need input sanitation here?
         url = "mailto:{}?subject={}&body={}"
         url = url.format(self._to,
                          self.subject(),

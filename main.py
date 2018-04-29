@@ -5,7 +5,6 @@ import time
 from watchdog.observers import Observer
 
 from auto_factuur.pdf_event_handler import PdfEventHandler
-from auto_factuur.contacts_reader import ContactsReader
 from auto_factuur.config import Config
 
 CONFIG_PATH = "../config.json"
@@ -14,6 +13,7 @@ CONFIG_PATH = "../config.json"
 def main():
     config = Config()
 
+    # TODO: log to std out and file at the same time.
     logging.basicConfig(filename=config.log_path(),
                         level=logging.INFO,
                         format='[%(asctime)s]: %(message)s',
