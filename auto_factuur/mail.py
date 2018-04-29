@@ -6,16 +6,19 @@ import subprocess
 
 class Mail:
 
-    def __init__(self, to="", subject="", body="", attachment=None):
+    def __init__(self, to="", subject="", cc="", body="", attachment=None):
         self._to = to
         self._subject = subject
+        self._cc = cc
         self._body = body
         self._attachment = attachment
 
     def get_url(self):
-        url = "mailto:{}?subject={}&body={}"
+        # TODO: Do we need input sanitation here?
+        url = "mailto:{}?subject={}&cc={}&body={}"
         url = url.format(self._to,
                          self.subject(),
+                         self._cc,
                          self.body())
         if self._attachment:
             url = url + "&attachment={}".format(self._attachment)
