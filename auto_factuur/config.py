@@ -12,6 +12,7 @@ class Config:
         "watch_path": "../test_dir/",
         "contacts_path": "../resources/contacts.xlsx",
         "contacts_sheet_name": "adressenlijst",
+        "mail_subject": "Factuur",
         "mail_cc": "",
         "mail_body": "Factuur\nFactuur!",
     }
@@ -27,9 +28,9 @@ class Config:
                     self.config = json.load(f)
             except (IOError, json.JSONDecodeError) as e:
                 logging.error(
-                    """Config file '{}' exists, but could not be read.
-                    Error: {}.
-                    Continuing using the default config.""".format(path, e))
+                    "Config file '{}' exists, but could not be read.\n"
+                    "Error: {}.\n"
+                    "Continuing using the default config.".format(path, e))
         else:
             logging.info("No config file found.")
             self.save_config(path)
@@ -41,9 +42,9 @@ class Config:
                 json.dump(self.config, f, sort_keys=True, indent=4)
         except IOError as e:
             logging.error(
-                """Something went wrong while trying to save config file: '{}'.
-                Error: {}.
-                Continuing using the default config.""".format(path, e))
+                "Something went wrong while trying to save config file: '{}'.\n"
+                "Error: {}.\n"
+                "Continuing using the default config.".format(path, e))
 
     def _get_key_or_return_default(self, key):
         """
@@ -74,6 +75,9 @@ class Config:
 
     def contacts_sheet_name(self):
         return self._get_key_or_return_default("contacts_sheet_name")
+
+    def mail_subject(self):
+        return self._get_key_or_return_default("mail_subject")
 
     def mail_cc(self):
         return self._get_key_or_return_default("mail_cc")

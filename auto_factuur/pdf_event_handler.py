@@ -20,6 +20,7 @@ class PdfEventHandler(FileSystemEventHandler):
         self._last_renamed_pdf = ""
 
         self.appendix_path = config.appendix_path()
+        self.mail_subject = config.mail_subject()
         self.mail_cc = config.mail_cc()
         self.mail_body = config.mail_body()
 
@@ -65,15 +66,32 @@ class PdfEventHandler(FileSystemEventHandler):
             # it is no longer needed.
             os.replace(temp_pdf, pdf_path)
 
-            self.get_invoice_number(os.path.basename(pdf_path))
+            invoice_number = self.get_invoice_number(os.path.basename(pdf_path))
+
+            body = self.mail_body
+            subject = self.mail_subject
+
+            if invoice_number is not None:
+                try:
+                    body = body.format(num=invoice_number)
+                    subject = subject.format(num=invoice_number)
+                except KeyError as e:
+                    logging.error("Problem formatting mail string:\n"
+                                  "It looks like there is a formatting string in the config file that looks like this: "
+                                  "\'{{{}}}\' that is not understood. Please remove it."
+                                  .format(e))
+                except IndexError as e:
+                    logging.error("Problem formatting mail string:\n"
+                                  "It looks like there is a formatting string in the config file that looks like this: "
+                                  "\'{}\'. Please remove it.")
 
             new_mail = mail.Mail(to="",
                                  cc=self.mail_cc,
-                                 subject=os.path.basename(pdf_path),
-                                 body=self.mail_body,
+                                 subject=subject,
+                                 body=body,
                                  attachment=pdf_path)
 
-            logging.info(new_mail.get_url())
+            logging.info("Mail url: '{}'".format(new_mail.get_url()))
 
             mail.open_mail_program(new_mail)
         except Exception as exception:
