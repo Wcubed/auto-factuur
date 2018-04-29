@@ -71,19 +71,21 @@ class PdfEventHandler(FileSystemEventHandler):
             body = self.mail_body
             subject = self.mail_subject
 
-            if invoice_number is not None:
-                try:
-                    body = body.format(num=invoice_number)
-                    subject = subject.format(num=invoice_number)
-                except KeyError as e:
-                    logging.error("Problem formatting mail string:\n"
-                                  "It looks like there is a formatting string in the config file that looks like this: "
-                                  "\'{{{}}}\' that is not understood. Please remove it."
-                                  .format(e))
-                except IndexError as e:
-                    logging.error("Problem formatting mail string:\n"
-                                  "It looks like there is a formatting string in the config file that looks like this: "
-                                  "\'{}\'. Please remove it.")
+            if invoice_number is None:
+                invoice_number = 0
+
+            try:
+                body = body.format(num=invoice_number)
+                subject = subject.format(num=invoice_number)
+            except KeyError as e:
+                logging.error("Problem formatting mail string:\n"
+                              "It looks like there is a formatting string in the config file that looks like this: "
+                              "\'{{{}}}\' that is not understood. Please remove it."
+                              .format(e))
+            except IndexError as e:
+                logging.error("Problem formatting mail string:\n"
+                              "It looks like there is a formatting string in the config file that looks like this: "
+                              "\'{}\'. Please remove it.")
 
             new_mail = mail.Mail(to="",
                                  cc=self.mail_cc,
