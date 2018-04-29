@@ -81,10 +81,19 @@ class PdfEventHandler(FileSystemEventHandler):
         """
         Gets the invoice number from the filename.
         Returns None if no number is found.
+        The invoice number is always at the front of the filename, like so:
+            1_test.pdf
+            23_bla.pdf
+            242_bla_test_something.pdf
         """
-        logging.info("getting numbers from {}".format(filename))
+        maybe_number = re.search(r'^\d+', filename)
 
-        numbers = re.search(r'\d+', filename).group()
-        logging.info(numbers)
+        number = None
 
-        return None
+        if maybe_number is not None:
+            number = maybe_number.group()
+            logging.info("Invoice number is: {}".format(number))
+        else:
+            logging.info("No invoice number found.")
+
+        return number
